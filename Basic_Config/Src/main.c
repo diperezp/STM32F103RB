@@ -17,28 +17,14 @@
  */
 
 #include <stdint.h>
-
-#define RCC_APB2ENR 0x40021018U
-volatile int *ENR;
-#define GPIOA_BASE_ADDR 0x40010800U
-#define GPIOA_CRL       0x00U
-volatile int *MOD;
-#define GPIOA_ODR   0x4001080CU
-volatile int *ODR;
+#include <stm32f1xx.h>
+#include <stm32f103xb.h>
 
 void toggle(void);
 
 int main(void)
 {
-	ENR = ((volatile int *) RCC_APB2ENR);
-	*ENR |=(1<<2); //Activamos la señal de reloj del peripherico GPIOA en el BUS APB2ENR
-	MOD = ((volatile int *) GPIOA_BASE_ADDR);
-	*MOD |=(1<<20);  //Configuramos el modo output
-	*MOD &=~(3<<22); //Configuramos el modo output en push-pull
-	ODR = ((volatile int *) GPIOA_ODR);
-	*ODR ^=(1<<5); // cambiamos el estado del led de estado LD2
-    /* Loop forever */
-	uint32_t i=0;
+	RCC->APB2ENR|=RCC_APB2ENR_IOPAEN;
 	while(1){
 		i++;
 		if(i==1600000){
