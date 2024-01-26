@@ -25,16 +25,22 @@ void toggle(void);
 int main(void)
 {
 	RCC->APB2ENR|=RCC_APB2ENR_IOPAEN;
+	GPIOA->CRL|=GPIO_CRL_MODE5_1;
+	GPIOA->CRL&=~GPIO_CRL_CNF5;
+	GPIOA->ODR^=GPIO_ODR_ODR5;
+	uint32_t i=0;
 	while(1){
 		i++;
-		if(i==1600000){
+		if(i==160000){
 			toggle();
 			i=0;
 		}
+
+
 	}
 }
 
 void toggle(void){
-	*ODR ^=(1<<5); // cambiamos el estado del led de estado LD2
+	GPIOA->ODR^=GPIO_ODR_ODR5;
 }
 
