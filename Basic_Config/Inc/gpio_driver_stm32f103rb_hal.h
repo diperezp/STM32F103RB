@@ -101,7 +101,7 @@ typedef struct{
 
 typedef struct{
 	GPIO_TypeDef       *pGPIOx;
-	GPIO_PinConfig		pinConfig;
+	GPIO_PinConfig_t	pinConfig;
 
 }GPIO_Handler_t;
 
